@@ -20,7 +20,7 @@ export const AxisY: StoryObj<typeof Resizable> = {
   },
   render: (props) => (
     <Resizable {...props}>
-      {({ position: y, separatorProps }) => (
+      {({ position: y, separatorProps, isDragging, separatorCursor }) => (
         <div
           style={{
             display: 'flex',
@@ -30,7 +30,13 @@ export const AxisY: StoryObj<typeof Resizable> = {
           }}
         >
           <SampleBox id="top-block" height={y} theme="blue" size={y} />
-          <SampleSeparator id="splitter" dir="horizontal" {...separatorProps} />
+          <SampleSeparator
+            id="splitter"
+            dir="horizontal"
+            cursor={separatorCursor}
+            isDragging={isDragging}
+            {...separatorProps}
+          />
           <SampleBox id="bottom-block" height={`calc(100% - ${y}px)`} theme="red" />
         </div>
       )}

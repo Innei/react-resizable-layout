@@ -32,6 +32,11 @@ export type Resizable = {
    * @deprecated Use separatorProps instead
    */
   splitterProps: SplitterProps;
+
+  /**
+   * cursor style of drag bar
+   */
+  separatorCursor: React.CSSProperties['cursor'];
 };
 
 export type ResizeCallbackArgs = {

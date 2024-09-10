@@ -23,7 +23,11 @@ const useResizable = ({
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState(initialPosition);
   const positionRef = useRef(initialPosition);
+
   const [endPosition, setEndPosition] = useState(initialPosition);
+  const [cursorStyle, setCursorStyle] = useState<
+    'col-resize' | 'row-resize' | 'n-resize' | 's-resize' | 'e-resize' | 'w-resize'
+  >();
 
   const ariaProps = useMemo<SeparatorProps>(
     () => ({
@@ -64,7 +68,21 @@ const useResizable = ({
         return reverse ? document.body.offsetHeight - e.clientY : e.clientY;
       })();
 
+      const cursorCurrentPosition = currentPosition;
       currentPosition = Math.min(Math.max(currentPosition, min), max);
+
+      if (axis === 'x') {
+        if (cursorCurrentPosition === currentPosition) {
+          setCursorStyle('col-resize');
+        } else {
+          setCursorStyle(cursorCurrentPosition > currentPosition ? 'w-resize' : 'e-resize');
+        }
+      } else if (cursorCurrentPosition === currentPosition) {
+        setCursorStyle('row-resize');
+      } else {
+        setCursorStyle(cursorCurrentPosition > currentPosition ? 'n-resize' : 's-resize');
+      }
+
       setPosition(currentPosition);
       positionRef.current = currentPosition;
     },
@@ -150,6 +168,7 @@ const useResizable = ({
     position,
     endPosition,
     isDragging,
+    separatorCursor: cursorStyle,
     separatorProps: {
       ...ariaProps,
       onPointerDown: handlePointerdown,

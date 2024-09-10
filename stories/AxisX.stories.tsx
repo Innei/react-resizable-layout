@@ -20,10 +20,15 @@ export const AxisX: StoryObj<typeof Resizable> = {
   },
   render: (props) => (
     <Resizable {...props}>
-      {({ position: x, separatorProps }) => (
+      {({ position: x, separatorProps, separatorCursor, isDragging }) => (
         <div id="wrapper" style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
           <SampleBox id="left-block" theme="blue" width={x} size={x} />
-          <SampleSeparator id="splitter" {...separatorProps} />
+          <SampleSeparator
+            id="splitter"
+            cursor={separatorCursor}
+            isDragging={isDragging}
+            {...separatorProps}
+          />
           <SampleBox id="right-block" theme="red" width={`calc(100% - ${x}px)`} />
         </div>
       )}

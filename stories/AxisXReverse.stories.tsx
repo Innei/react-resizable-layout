@@ -21,10 +21,15 @@ export const AxisXReverse: StoryObj<typeof Resizable> = {
   },
   render: (props) => (
     <Resizable {...props}>
-      {({ position: x, separatorProps }) => (
+      {({ position: x, separatorProps, isDragging, separatorCursor }) => (
         <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
           <SampleBox id="left-block" theme="blue" width={`calc(100% - ${x}px)`} />
-          <SampleSeparator id="splitter" {...separatorProps} />
+          <SampleSeparator
+            id="splitter"
+            cursor={separatorCursor}
+            isDragging={isDragging}
+            {...separatorProps}
+          />
           <SampleBox id="right-block" theme="red" width={x} size={x} />
         </div>
       )}
